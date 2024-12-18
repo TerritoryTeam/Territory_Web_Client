@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 194.79 194.46">
+	<defs>
+		<style>
+.cls-1,.cls-12,.cls-13,.cls-15,.cls-16,.cls-2,.cls-4{
+	fill:none;
+}
+.cls-1, .cls-4, .cls-13,.cls-2{
+	stroke:#96a6cb;
+}
+.cls-1{
+	opacity:0.5;
+}
+.cls-3,.cls-9{
+	fill:#bdc9e0;
+}
+.cls-3{
+	opacity:0.2;
+}
+.cls-6, .cls-6{
+	fill: #4A66A4;
+}
+.cls-5, .cls-7, .cls-10, .cls-11, .cls-14{
+	fill: #2C467E;
+}
+.cls-8{
+	fill:#333;
+}
+.cls-12{
+	stroke: #2C467E;
+}
+.cls-13{
+	stroke-width:0.75px;
+}
+
+.cls-15, .cls-16{
+	stroke: #2C467E;
+}
+
+
+svg{
+	width: 300px;
+	height: 300px;
+	padding-bottom: 8px; 
+}
+
+.eleps-bg{
+	transform-origin: center center;
+	animation: eleps-rotate 260s linear 0s infinite;
+}
+.eleps{
+	
+	animation: eleps 2s ease 0s forwards;
+}
+@keyframes eleps{
+	0%{
+		transform: rotate(40deg) scale(.4)
+	}
+	50%{
+		transform: rotate(20deg) scale(1.1)
+	}
+}
+@keyframes eleps-rotate{
+	0%{transform: rotate(360deg)}
+}
+.robot{
+	transform-origin: center;
+	animation: robot .6s ease 0s forwards, robot-flip 3s ease 0s infinite;
+}
+@keyframes robot{
+	0%{
+		opacity: 0;
+	}
+}
+@keyframes robot-flip{
+	50%{
+		transform: rotateY(6deg) scale(0.999) translateY(2px);
+	}
+}
+
+.flag{
+	transform-origin: center;
+	animation: flag 3s ease 0s infinite;
+}
+@keyframes flag{
+	0%,100%{transform: rotate(-1deg);}
+	50%{transform: rotate(2deg);}
+}
+
+.eye{
+	transform-origin: center 40%;
+	animation: eye 4s linear 0s infinite;
+}
+@keyframes eye{
+	0%,20%{transform: rotateX(0deg)}
+	10%{transform: rotateX(24deg)}
+}
+
+.eye-white{
+	transform: translateX(0px) translateY(0px);
+	animation: eye-white 10s ease 0s infinite;
+}
+@keyframes eye-white{
+	0%,10%{transform: translateX(0px) translateY(0px);}
+	30%,40%{transform: translateX(-4px) translateY(1px);}
+	60%,70%{transform: translateX(-2px) translateY(4px);}
+}
+
+.shadow{
+	transform-origin: center;
+	animation: shadow 3s ease 0s infinite;
+}
+@keyframes shadow{
+	50%{
+		transform: scaleX(0.85);
+		opacity: 0.16;
+	}
+}
+.head{
+	transform-origin: center;
+	animation: head 3s ease 0s infinite;
+}
+@keyframes head{
+	50%{
+		transform: translateY(0.8px);
+	}
+}
+
+</style>
+	</defs>
+	<title>welcome illustration</title>
+	<g class="robot">
+		<path class="cls-2" d="M128.63,103.55a33.5,33.5,0,0,1,9.91,23.83h0A19.64,19.64,0,0,1,118.9,147H76a19.64,19.64,0,0,1-19.64-19.64h0A33.49,33.49,0,0,1,66,103.76"/>
+		<circle class="cls-4" cx="97.44" cy="120.27" r="9.06"/>
+		<circle class="cls-5" cx="97.44" cy="120.27" r="5.59"/>
+		<g class="head">
+			<path class="cls-2" d="M97.27,45.62h0A34.62,34.62,0,0,1,131.9,80.24V96.38a3.17,3.17,0,0,1-3.17,3.17H65.81a3.17,3.17,0,0,1-3.17-3.17V80.24A34.62,34.62,0,0,1,97.27,45.62Z"/>
+			<path class="cls-2" d="M62,72.33c-3.8,0-6.88,3.9-6.88,8.71s3.08,8.71,6.88,8.71"/>
+			<path class="cls-2" d="M132.63,72.33c3.8,0,6.88,3.9,6.88,8.71s-3.08,8.71-6.88,8.71"/>
+			<g class="eye">
+				<circle class="cls-7" cx="97.44" cy="75.99" r="14.55"/>
+				<circle class="cls-8" cx="97.44" cy="73.99" r="6.86" transform="translate(-5.04 140.84) rotate(-70.33)"/>
+				<circle class="cls-9 eye-white" cx="100.49" cy="71.27" r="2.79" transform="translate(-0.45 141.89) rotate(-70.33)"/>
+				<path class="cls-2" d="M111.92,63.09a19.43,19.43,0,0,0-28.45,0"/>
+				<path class="cls-6" d="M100.05,61.69a16.29,16.29,0,0,1-.75,28.71,14.53,14.53,0,0,0,.75-28.71Z"/>
+			</g>
+		</g>
+		<path class="cls-6" d="M95.44,125.48a6.8,6.8,0,0,1,3.68-10.54,5.59,5.59,0,0,0-3.68,10.54Z"/>
+		<g class="flag">
+			<path class="cls-2" d="M137.54,115.07A12.51,12.51,0,0,0,150,102.57h4.9a17.42,17.42,0,0,1-15.59,17.31"/>
+			<line class="cls-2" x1="154.57" y1="99.19" x2="133.44" y2="28.51"/>
+			<path class="cls-10" d="M158.36,51.43l-12.27,3.81a1.5,1.5,0,0,1-1.88-1L134.82,24a1.5,1.5,0,0,1,1-1.88L183.46,7.36a1.5,1.5,0,0,1,1.83,2l-6.88,16.7a1.5,1.5,0,0,0,.57,1.83l15.13,9.87a1.5,1.5,0,0,1-.37,2.7l-23.18,7.2"/>
+			<rect class="cls-11" x="148.37" y="93.64" width="10.87" height="15.94" rx="5.44" ry="5.44" transform="matrix(0.3, 0.96, -0.96, 0.3, 205.51, -75.33)"/>
+			<path class="cls-6" d="M157,49.16A46.86,46.86,0,0,1,181.45,8L135.81,22.15a1.5,1.5,0,0,0-1,1.88l9.38,30.23a1.5,1.5,0,0,0,1.88,1l11-3.41C157,50.95,157,50.06,157,49.16Z"/>
+			<path class="cls-6" d="M161.42,99.26A5.4,5.4,0,0,0,160.09,97a14.81,14.81,0,0,1-11.49,10,5.42,5.42,0,0,0,4.38.53l4.84-1.5A5.44,5.44,0,0,0,161.42,99.26Z"/>
+		</g>
+	</g>
+	<ellipse class="cls-3 shadow" cx="97.69" cy="157.76" rx="16.7" ry="1.49"/>
+	<g class="eleps-bg eleps">
+		<circle class="cls-12" cx="166.54" cy="139.64" r="2.81"/>
+		<circle class="cls-13" cx="41.28" cy="49.36" r="2.83"/>
+		<circle class="cls-14" cx="156.72" cy="168.24" r="5.23" transform="translate(-73.06 160.1) rotate(-45)"/>
+		<circle class="cls-15" cx="85.98" cy="23.52" r="1.78"/>
+		<circle class="cls-13" cx="156.14" cy="70.08" r="1.41"/>
+		<circle class="cls-16" cx="40.78" cy="156.44" r="2.81"/>
+		<path class="cls-6" d="M160.42,164.54,153,171.93a5.23,5.23,0,1,0,7.39-7.39Z"/>
+	</g>
+</svg>
