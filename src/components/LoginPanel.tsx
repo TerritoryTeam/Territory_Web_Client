@@ -24,6 +24,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GithubIcon from '@mui/icons-material/GitHub';
+import CloseIcon from '@mui/icons-material/Close';
 
 export interface LoginDialogProps {
     open: boolean;
@@ -58,8 +59,7 @@ function LoginDialog (props: LoginDialogProps) {
 
     return (
         <Dialog 
-            open={props.open}
-            onClose={props.onClose}>
+            open={props.open}>
             <DialogTitle
                 className={classes.titleContainer}>
                 <Stack direction="column">
@@ -67,6 +67,11 @@ function LoginDialog (props: LoginDialogProps) {
                     <p className={classes.labelTitle}>Welcome to Territory</p>
                 </Stack>
             </DialogTitle>
+            <IconButton
+                className={classes.closeDialogButton}
+                onClick={props.onClose}>
+                <CloseIcon fontSize="small" color="disabled" />
+            </IconButton>
             <Stack
                 className={classes.contentContainer}
                 rowGap={3}>
@@ -181,6 +186,11 @@ const useStyles = makeStyles() ({
         alignItems: "center",
         textAlign: "center",
         padding: "32px",
+    },
+    closeDialogButton: {
+        position: "absolute",
+        right: "20px",
+        top: "20px",
     },
     inputPaper: {
         width: "320px",
