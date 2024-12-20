@@ -1,30 +1,30 @@
 import { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 
-
-import WelcomePanel from "../components/WelcomePanel";
 import GameBar from "../components/AppBar";
+import WelcomeDialog from "../components/WelcomePanel";
 
 const HomePage = () => {
-    const [open, setOpen] = useState(false);
+    const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
+
 
     const {classes} = useStyles();
 
     useEffect(() => {
         setTimeout(() => {
-            setOpen(true);
+            setIsWelcomeOpen(true);
             }, 200);
-    })
+    }, [])
 
     const handleWelcomeClose = () => {
-        setOpen(false);
+        setIsWelcomeOpen(false);
     }
     
     return (
         <div className={classes.homeContainer}>
             <GameBar />
-            <WelcomePanel 
-                open={open}
+            <WelcomeDialog 
+                open={isWelcomeOpen}
                 onClose={handleWelcomeClose}
             />
         </div>

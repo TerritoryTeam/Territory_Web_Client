@@ -27,6 +27,7 @@ import GithubIcon from '@mui/icons-material/GitHub';
 
 export interface LoginDialogProps {
     open: boolean;
+    onClose: () => void;
 }
 
 function LoginDialog (props: LoginDialogProps) {
@@ -40,7 +41,7 @@ function LoginDialog (props: LoginDialogProps) {
 
     useEffect(() => {
         // Inicializamos los iconos después de que el componente se monte
-        // createIcons();
+        
     }, []);
 
     const switchPasswordVisibility = () => {
@@ -57,7 +58,8 @@ function LoginDialog (props: LoginDialogProps) {
 
     return (
         <Dialog 
-            open={props.open}>
+            open={props.open}
+            onClose={props.onClose}>
             <DialogTitle
                 className={classes.titleContainer}>
                 <Stack direction="column">
@@ -86,7 +88,13 @@ function LoginDialog (props: LoginDialogProps) {
                         className={classes.inputFont}
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter Password"
-                        sx={{ ml: 1, flex: 1 }}
+                        sx={{ 
+                            ml: 1,
+                            flex: 1,
+                            '& input[type="password"]::-ms-reveal': {
+                                display: 'none',
+                            },
+                        }}
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton 

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import { 
@@ -20,7 +20,7 @@ export interface WelcomeDialogProps {
 function WelcomeDialog (props: WelcomeDialogProps) {
     const {open, onClose} = props;
     
-    const [isLoginDialogOn, setIsLoginDialogOn] = React.useState(false);
+    const [isLoginDialogOn, setIsLoginDialogOn] = useState(false);
     const isLoginIn = useSelector((state: RootState) => state.auth.isLoginIn);
 
     const {classes} = useStyles();
@@ -29,16 +29,22 @@ function WelcomeDialog (props: WelcomeDialogProps) {
         setIsLoginDialogOn(true);
     }
 
-    const handleLoginDialogClose = () => {
-        onClose();
+    const handleLoginClose = () => {
+        setIsLoginDialogOn(false);
     }
+
+    const handleBackdropClick = (event: { stopPropagation: () => void; }) => {
+        event.stopPropagation();
+    };
 
     return (
         <Backdrop
             sx={(theme) => ({ backgroundColor: '#000000b3', zIndex: theme.zIndex.drawer + 1 })}
-            open={open}>
+            open={open}
+            onClick={onClose}>
             <Stack
-                className={classes.stackContainer}>
+                className={classes.stackContainer}
+                onClick={handleBackdropClick}>
                 <img 
                     className={classes.robot}
                     src="/assets/menu/menu_welcome.svg"/>
@@ -48,7 +54,7 @@ function WelcomeDialog (props: WelcomeDialogProps) {
                     isLoginIn ? (
                         <Button 
                             variant="contained"
-                            onClick={handleLoginDialogClose}>
+                            onClick={handleLogin}>
                             Start
                         </Button>
                     ): (
@@ -60,7 +66,9 @@ function WelcomeDialog (props: WelcomeDialogProps) {
                     )
                 }
             </Stack>
-            <LoginDialog open={isLoginDialogOn}/>
+            <LoginDialog 
+                open={isLoginDialogOn}
+                onClose={handleLoginClose}/>
         </Backdrop>
     ); 
 }

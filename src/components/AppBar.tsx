@@ -10,9 +10,17 @@ import {
     Stack,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useState } from "react";
+import LoginDialog from "./LoginPanel";
 
 function GameBar() {
+    const [isLoginDialogOn, setIsLoginDialogOn] = useState(false);
+
     const {classes} = useStyles()
+
+    const handleLoginClose = () => {
+        setIsLoginDialogOn(!isLoginDialogOn);
+    }
 
     return (
         <AppBar position="static">
@@ -34,9 +42,14 @@ function GameBar() {
                     </Typography>
                 </Stack>
                 <Box>
-                    <Button color="inherit">Login</Button>
+                    <Button 
+                        color="inherit"
+                        onClick={handleLoginClose}>Login</Button>
                 </Box>
             </Toolbar>
+            <LoginDialog 
+                open={isLoginDialogOn}
+                onClose={handleLoginClose} />
       </AppBar>
     )
 }
