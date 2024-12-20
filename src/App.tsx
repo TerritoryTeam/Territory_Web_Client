@@ -1,5 +1,5 @@
 import LogoPage from "./pages/LogoPage"
-import Home from "./pages/Home"
+import HomePage from "./pages/HomePage"
 import { useEffect, useState } from "react"
 
 function App()
@@ -16,7 +16,7 @@ function App()
 
     return (
         <div>
-            {isLogoVisiable ? <LogoPage /> : <Home />}
+            {isLogoVisiable ? <LogoPage /> : <HomePage />}
         </div>
     )
 }

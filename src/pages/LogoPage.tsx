@@ -2,10 +2,9 @@
 import { CSSProperties } from "react";
 
 const LogoPage = () => {
-
   return (
     <div style={styles.logoContainer}>
-      <h1>Welcome to Our App!</h1>
+      <img style={styles.logo} src="/assets/logo.png"></img>
     </div>
   );
 };
@@ -17,11 +16,11 @@ const styles: { [key: string]: CSSProperties } = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    backgroundColor: "#f4f4f4",
+    background: "#6575A8",
     color: "black",
   },
   logo: {
-    width: "200px",
+    width: "480px",
     height: "auto",
   },
 };
