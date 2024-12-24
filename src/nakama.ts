@@ -1,30 +1,33 @@
 import { Client, Session, Socket } from "@heroiclabs/nakama-js"
-import { v4 as uuidv4 } from "uuid"
 
-class Nakama {
+class NakamaClient {
   private client: Client
   private session: Session
-  private socket: Socket
 
   constructor() {
+    this.client = new Client('defaultkey', '127.0.0.1', '7350', false);
   }
 
-  async authenticate() {
-    this.client = new Client("defaultkey", "127.0.0.1", "7350", false);
-
-    let deviceId = localStorage.getItem("device-id");
-    if (!deviceId) {
-      deviceId = uuidv4();
-      localStorage.setItem("device_id", deviceId as string);
+  async authenticateEmail(
+    email: string,
+    password: string
+  ) {
+    try {
+      this.session = await this.client.authenticateEmail(email, password, false);
+    } 
+    catch (error) {
+      console.error("Error authenticating email: ", error);
     }
 
-    this.session = await this.client.authenticateCustom(deviceId as string, true);
-    localStorage.setItem("user_id", this.session.user_id as string);
+    console.log("Session: ", this.session);	
+    console.log("User ID: ", this.session.user_id);
+    console.log("Username: ", this.session.username);
+    console.log("Token: ", this.session.token);
+    console.log("Refresh Token: ", this.session.refresh_token);
+    console.log("Test");
 
-    const trace = false;
-    this.socket = this.client.createSocket(false, trace);
-    await this.socket.connect(this.session, false);
+    return this.session;
   }
 }
 
-export default new Nakama()
+export default NakamaClient;

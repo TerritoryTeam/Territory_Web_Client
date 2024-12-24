@@ -21,7 +21,7 @@ function WelcomeDialog (props: WelcomeDialogProps) {
     const {open, onClose} = props;
     
     const [isLoginDialogOn, setIsLoginDialogOn] = useState(false);
-    const isLoginIn = useSelector((state: RootState) => state.auth.isLoginIn);
+    const isLoginIn = useSelector((state: RootState) => state.auth.loginStatus === 'success');
 
     const {classes} = useStyles();
 
