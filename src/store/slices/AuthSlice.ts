@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { globalContainer } from "../../providers/GlobalProvider";
 
-import { fetchUserInformation } from "./UserSlice";
+import { 
+    clearUserInformation,
+    fetchUserInformation
+} from "./UserSlice";
 
 interface AuthState {
     isLoginIn: boolean;
@@ -43,11 +46,13 @@ const AuthSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        logout: (state) => {
+        logout: (state, action) => {
             state.isLoginIn = false;
             state.loginStatus = 'idle';
-
             
+            state.error = null;
+            // Dispatch clearUserInformation action
+            action.payload.dispatch(clearUserInformation());
         }
     },
     extraReducers: (builder) => {

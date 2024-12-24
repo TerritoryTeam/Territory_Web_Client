@@ -7,7 +7,6 @@ import WelcomeDialog from "../components/WelcomePanel";
 const HomePage = () => {
     const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
 
-
     const {classes} = useStyles();
 
     useEffect(() => {
