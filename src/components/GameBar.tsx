@@ -38,8 +38,8 @@ function GameBar() {
         dispatch(logout());
     }
 
-    const handleLoginDialog = () => {
-        setIsLoginDialogOn(!isLoginDialogOn);
+    const handleLoginDialog = (open : boolean = false) => {
+        setIsLoginDialogOn(open);
     }
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -100,7 +100,7 @@ function GameBar() {
                         ) : (
                             <Button 
                                 color="inherit"
-                                onClick={handleLoginDialog}>
+                                onClick={() => handleLoginDialog(true)}>
                                     Sign In or Register
                             </Button>
                         )

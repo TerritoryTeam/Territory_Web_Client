@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { globalContainer } from "../../providers/GlobalProvider";
 
 import { 
@@ -46,13 +46,14 @@ const AuthSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        logout: (state, action) => {
+        logout: (state) => {
             state.isLoginIn = false;
             state.loginStatus = 'idle';
-            
+
             state.error = null;
+
             // Dispatch clearUserInformation action
-            action.payload.dispatch(clearUserInformation());
+            clearUserInformation();
         }
     },
     extraReducers: (builder) => {
