@@ -19,14 +19,17 @@ class NakamaClient {
       console.error("Error authenticating email: ", error);
     }
 
-    console.log("Session: ", this.session);	
-    console.log("User ID: ", this.session.user_id);
-    console.log("Username: ", this.session.username);
-    console.log("Token: ", this.session.token);
-    console.log("Refresh Token: ", this.session.refresh_token);
-    console.log("Test");
-
     return this.session;
+  }
+
+  async fetchUserInfo() {
+    try {
+      const account = await this.client.getAccount(this.session);
+      return account;
+    } 
+    catch (error) {
+      console.error("Error fetching user information: ", error);
+    }
   }
 }
 

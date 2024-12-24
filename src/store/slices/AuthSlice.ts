@@ -1,15 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { globalContainer } from "../../providers/GlobalProvider";
 
-
-interface User {
-    id: string;
-    username: string;
-    email: string;
-}
+import { fetchUserInformation } from "./UserSlice";
 
 interface AuthState {
-    user: User | null;
+    isLoginIn: boolean;
     loginStatus: 'idle' | 'loading' | 'failed' | 'success';
     error: string | null;
 }
@@ -20,29 +15,26 @@ interface LoginWithEmailCredential {
 }
 
 const initialState: AuthState = {
-    user: null,
+    isLoginIn: false,
     loginStatus: 'idle',
     error: null
 }
 
 
-export const loginWithEmailCredential = createAsyncThunk<User, LoginWithEmailCredential, { rejectValue: string }>(
+export const loginWithEmailCredential = createAsyncThunk<boolean, LoginWithEmailCredential, { rejectValue: string }>(
     'auth/login',
     async ({ email, password }, thunkAPI) => {
       try {
         const session = await globalContainer.nakama.authenticateEmail(email, password);
         if (session != null) {
-            return {
-                id: session.user_id || '',
-                username: session.username || '',
-                email: email
-            } as User;
+            thunkAPI.dispatch(fetchUserInformation());
+            
+            return true;
         } else {
           return thunkAPI.rejectWithValue("Invalid Authentication"); 
         }
       } catch (error) {
         return thunkAPI.rejectWithValue('Network error');
-        
       }
     }
   );
@@ -52,8 +44,10 @@ const AuthSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            state.user = null;
+            state.isLoginIn = false;
             state.loginStatus = 'idle';
+
+            
         }
     },
     extraReducers: (builder) => {
@@ -62,7 +56,7 @@ const AuthSlice = createSlice({
                 state.loginStatus = 'loading';
             })
             .addCase(loginWithEmailCredential.fulfilled, (state, action) => {
-                state.user = action.payload;
+                state.isLoginIn = action.payload;
                 state.loginStatus = 'success';
             })
             .addCase(loginWithEmailCredential.rejected, (state, action) => {   
@@ -72,5 +66,7 @@ const AuthSlice = createSlice({
     }
 });
 
-export const { logout } = AuthSlice.actions;
+export const { 
+    logout 
+} = AuthSlice.actions;
 export default AuthSlice.reducer;

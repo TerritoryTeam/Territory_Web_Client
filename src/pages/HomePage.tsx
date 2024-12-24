@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 
-import GameBar from "../components/AppBar";
+import GameBar from "../components/GameBar";
 import WelcomeDialog from "../components/WelcomePanel";
 
 const HomePage = () => {

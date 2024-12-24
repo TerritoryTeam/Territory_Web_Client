@@ -26,7 +26,12 @@ function WelcomeDialog (props: WelcomeDialogProps) {
     const {classes} = useStyles();
 
     const handleLogin = () => {
-        setIsLoginDialogOn(true);
+        if (isLoginIn) {
+            onClose();
+        }
+        else {
+            setIsLoginDialogOn(true);
+        }
     }
 
     const handleLoginClose = () => {
