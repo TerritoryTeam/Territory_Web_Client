@@ -2,7 +2,6 @@ import {
     useEffect,
     useState 
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "tss-react/mui";
 
 import { 
@@ -30,8 +29,12 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { EmailValidator, PasswordValidator } from "../utils/FormValidator";
-import { AppDispatch, RootState } from "../store";
-import { loginWithEmailCredential } from "../store/slices/AuthSlice";
+
+import { loginWithEmailCredential } from "../stores/slices/AuthSlice";
+import { 
+    useAppDispatch, 
+    useAppSelector,
+} from "../hook";
 
 export interface LoginDialogProps {
     open: boolean;
@@ -40,10 +43,10 @@ export interface LoginDialogProps {
 
 function LoginDialog (props: LoginDialogProps) {
     const {classes} = useStyles();
-    const {loginStatus, error} = useSelector((state: RootState) => state.auth);
+    const {loginStatus, error} = useAppSelector((state) => state.auth);
     const [pageType, setPageType] = useState("login");
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

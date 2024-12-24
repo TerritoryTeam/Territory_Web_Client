@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "tss-react/mui"
 
 import { 
@@ -18,16 +17,16 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 
 import { 
-    AppDispatch, 
-    RootState,
-} from "../store";
+    useAppDispatch,
+    useAppSelector,
+} from "../hook";
 import LoginDialog from "./LoginPanel";
-import { logout } from "../store/slices/AuthSlice";
+import { logout } from "../stores/slices/AuthSlice";
 
 function GameBar() {
-    const dispatch = useDispatch<AppDispatch>();
-    const isLoginIn = useSelector((state: RootState) => state.auth.loginStatus === 'success');
-    const user = useSelector((state: RootState) => state.user);
+    const dispatch = useAppDispatch();
+    const isLoginIn = useAppSelector((state) => state.auth.loginStatus === 'success');
+    const user = useAppSelector((state) => state.user);
 
     const [isLoginDialogOn, setIsLoginDialogOn] = useState(false);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);

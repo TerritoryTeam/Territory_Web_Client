@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 import { 
     Button,
@@ -8,8 +7,7 @@ import {
 } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 
-
-import { RootState } from "../store";
+import { useAppSelector } from "../hook";
 import LoginDialog from "./LoginPanel";
 
 export interface WelcomeDialogProps {
@@ -21,7 +19,7 @@ function WelcomeDialog (props: WelcomeDialogProps) {
     const {open, onClose} = props;
     
     const [isLoginDialogOn, setIsLoginDialogOn] = useState(false);
-    const isLoginIn = useSelector((state: RootState) => state.auth.loginStatus === 'success');
+    const isLoginIn = useAppSelector((state) => state.auth.loginStatus === 'success');
 
     const {classes} = useStyles();
 
