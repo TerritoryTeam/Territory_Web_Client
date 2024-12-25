@@ -5,6 +5,7 @@ import {
 import { makeStyles } from "tss-react/mui";
 
 import { 
+    Alert,
     Button,
     Checkbox,
     Dialog, 
@@ -58,6 +59,18 @@ function LoginDialog (props: LoginDialogProps) {
     const [usernameError, setUsernameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+
+    useEffect(() => {
+        setEmail("");
+        setPassword("");
+        setNickName("");
+        setUsername("");
+
+        setEmailError(false);
+        setPasswordError(false);
+        setNickNameError(false);
+        setUsernameError(false);
+    }, [])
 
     const switchPasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -122,6 +135,14 @@ function LoginDialog (props: LoginDialogProps) {
                 <CloseIcon fontSize="small" color="disabled" />
             </IconButton>
             {
+                loginStatus === "failed" ?
+                    <Alert 
+                        className={classes.errorContainer}
+                        severity="error">
+                            {error}
+                    </Alert> : null
+            }
+            {
                 pageType === "login" ?
                     <Stack
                         className={classes.contentContainer}
@@ -147,6 +168,7 @@ function LoginDialog (props: LoginDialogProps) {
                             <InputBase
                                 className={classes.inputFont}
                                 type={showPassword ? "text" : "password"}
+                                autoComplete="off"
                                 placeholder="Enter Password"
                                 value={password}
                                 error={passwordError}
@@ -283,6 +305,7 @@ function LoginDialog (props: LoginDialogProps) {
                                 value={password}
                                 error={passwordError}
                                 onChange={(e) => setPassword(e.target.value)}
+                                autoComplete="new-password"
                                 sx={{ 
                                     ml: 1,
                                     flex: 1,
@@ -352,6 +375,9 @@ const useStyles = makeStyles() ({
         position: "absolute",
         right: "20px",
         top: "20px",
+    },
+    errorContainer: {
+
     },
     inputPaper: {
         width: "320px",

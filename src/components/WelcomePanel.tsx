@@ -38,7 +38,14 @@ function WelcomeDialog (props: WelcomeDialogProps) {
                     className={classes.robot}
                     src="/assets/menu/menu_welcome.svg"/>
                 <h1>WELCOME TO THE TERRITORY</h1>
-                <p>You need to log in to proceed. Please log in first.</p>
+                <p>
+                    {
+                        isLoginIn ?
+                            "Let's start the game!"
+                            : 
+                            "You need to log in to proceed. Please log in first."
+                    }
+                </p>
                 {
                     isLoginIn ? (
                         <Button 
@@ -50,7 +57,7 @@ function WelcomeDialog (props: WelcomeDialogProps) {
                         <Button 
                             variant="contained"
                             onClick={() => handleLoginBtn()}>
-                                Login
+                            Login
                         </Button>
                     )
                 }
