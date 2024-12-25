@@ -59,15 +59,6 @@ function LoginDialog (props: LoginDialogProps) {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-    useEffect(() => {
-        // Inicializamos los iconos después de que el componente se monte
-        
-    }, []);
-
-    if (loginStatus === 'success') {
-        props.onClose();
-    }
-
     const switchPasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -75,6 +66,16 @@ function LoginDialog (props: LoginDialogProps) {
     const switchLoginRegister = () => {
         setPageType(pageType === "login" ? "register" : "login");
     }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            if (pageType === "register") {
+                handleRegisterSubmit(e);
+            } else if (pageType === "login") {
+                handleSignInSubmit(e); 
+            }
+        }
+    };
 
     const handleSignInSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -94,9 +95,13 @@ function LoginDialog (props: LoginDialogProps) {
         dispatch(loginWithEmailCredential({email: email, password: password}))
     };
 
+    const handleRegisterSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+    }
+
     return (
         <Dialog 
-            open={props.open}>
+            open={props.open && loginStatus !== 'success'}>
             <DialogTitle
                 className={classes.titleContainer}>
                 <Stack direction="column">
@@ -132,6 +137,7 @@ function LoginDialog (props: LoginDialogProps) {
                                 value={email}
                                 error={emailError}
                                 onChange={(e) => setEmail(e.target.value)}
+                                onKeyDown={handleKeyDown}
                             />
                         </Paper>
                         <Paper
@@ -164,6 +170,7 @@ function LoginDialog (props: LoginDialogProps) {
                                         </IconButton>
                                     </InputAdornment>
                                 }
+                                onKeyDown={handleKeyDown}
                             />
 
                         </Paper>
@@ -234,6 +241,7 @@ function LoginDialog (props: LoginDialogProps) {
                                 value={nickName}
                                 error={nickNameError}
                                 onChange={(e) => setNickName(e.target.value)}
+                                onKeyDown={handleKeyDown}
                             />
                         </Paper>
                         <Paper
@@ -247,6 +255,7 @@ function LoginDialog (props: LoginDialogProps) {
                                 value={email}
                                 error={emailError}
                                 onChange={(e) => setEmail(e.target.value)}
+                                onKeyDown={handleKeyDown}
                             />
                         </Paper>
                         <Paper
@@ -260,6 +269,7 @@ function LoginDialog (props: LoginDialogProps) {
                                 value={username}
                                 error={usernameError}
                                 onChange={(e) => setUsername(e.target.value)}
+                                onKeyDown={handleKeyDown}
                             />
                         </Paper>
                         <Paper
@@ -292,6 +302,7 @@ function LoginDialog (props: LoginDialogProps) {
                                         </IconButton>
                                     </InputAdornment>
                                 }
+                                onKeyDown={handleKeyDown}
                             />
                         </Paper>
                         <Typography

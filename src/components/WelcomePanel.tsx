@@ -23,31 +23,17 @@ function WelcomeDialog (props: WelcomeDialogProps) {
 
     const {classes} = useStyles();
 
-    const handleLogin = () => {
-        if (isLoginIn) {
-            onClose();
-        }
-        else {
-            setIsLoginDialogOn(true);
-        }
+    const handleLoginBtn = () => {
+        setIsLoginDialogOn(true);
+        onClose();
     }
-
-    const handleLoginClose = () => {
-        setIsLoginDialogOn(false);
-    }
-
-    const handleBackdropClick = (event: { stopPropagation: () => void; }) => {
-        event.stopPropagation();
-    };
 
     return (
         <Backdrop
             sx={(theme) => ({ backgroundColor: '#000000b3', zIndex: theme.zIndex.drawer + 1 })}
-            open={open}
-            onClick={onClose}>
+            open={open}>
             <Stack
-                className={classes.stackContainer}
-                onClick={handleBackdropClick}>
+                className={classes.stackContainer}>
                 <img 
                     className={classes.robot}
                     src="/assets/menu/menu_welcome.svg"/>
@@ -57,13 +43,13 @@ function WelcomeDialog (props: WelcomeDialogProps) {
                     isLoginIn ? (
                         <Button 
                             variant="contained"
-                            onClick={handleLogin}>
+                            onClick={onClose}>
                             Start
                         </Button>
                     ): (
                         <Button 
                             variant="contained"
-                            onClick={handleLogin}>
+                            onClick={() => handleLoginBtn()}>
                                 Login
                         </Button>
                     )
@@ -71,7 +57,7 @@ function WelcomeDialog (props: WelcomeDialogProps) {
             </Stack>
             <LoginDialog 
                 open={isLoginDialogOn}
-                onClose={handleLoginClose}/>
+                onClose={() => setIsLoginDialogOn(false)}/>
         </Backdrop>
     ); 
 }
