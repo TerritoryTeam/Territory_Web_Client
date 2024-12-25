@@ -44,6 +44,9 @@ export interface LoginDialogProps {
 
 function LoginDialog (props: LoginDialogProps) {
     const {classes} = useStyles();
+    const {open, onClose} = props;
+
+    const [loginCloseCount, setLoginCloseCount] = useState(0);
     const {loginStatus, error} = useAppSelector((state) => state.auth);
     const [pageType, setPageType] = useState("login");
 
@@ -61,16 +64,21 @@ function LoginDialog (props: LoginDialogProps) {
     const [passwordError, setPasswordError] = useState(false);
 
     useEffect(() => {
+        initialInputState();
+    }, [loginStatus, loginCloseCount, pageType])
+
+    const initialInputState = () => {
         setEmail("");
         setPassword("");
         setNickName("");
         setUsername("");
 
+        setShowPassword(false);
         setEmailError(false);
         setPasswordError(false);
         setNickNameError(false);
         setUsernameError(false);
-    }, [])
+    }
 
     const switchPasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -112,9 +120,14 @@ function LoginDialog (props: LoginDialogProps) {
         e.preventDefault();
     }
 
+    const onCloseBtn = () => {
+        setLoginCloseCount(loginCloseCount + 1);
+        onClose();
+    }
+
     return (
         <Dialog 
-            open={props.open && loginStatus !== 'success'}>
+            open={open && loginStatus !== 'success'}>
             <DialogTitle
                 className={classes.titleContainer}>
                 <Stack direction="column">
@@ -131,7 +144,7 @@ function LoginDialog (props: LoginDialogProps) {
             </DialogTitle>
             <IconButton
                 className={classes.closeDialogButton}
-                onClick={props.onClose}>
+                onClick={onCloseBtn}>
                 <CloseIcon fontSize="small" color="disabled" />
             </IconButton>
             {
