@@ -3,6 +3,7 @@ import { makeStyles } from "tss-react/mui";
 
 import GameBar from "../components/GameBar";
 import WelcomeDialog from "../components/WelcomePanel";
+import TerritoryGameWorld from "./TerritoryGameWorld";
 
 const HomePage = () => {
     const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
@@ -22,6 +23,7 @@ const HomePage = () => {
     return (
         <div className={classes.homeContainer}>
             <GameBar />
+            <TerritoryGameWorld />
             <WelcomeDialog 
                 open={isWelcomeOpen}
                 onClose={handleWelcomeClose}
@@ -33,7 +35,9 @@ const HomePage = () => {
 const useStyles = makeStyles() ({
     homeContainer: {
         height: "100vh",
-        backgroundColor: "#6575A8"
+        backgroundColor: "#6575A8",
+        display: "flex",
+        flexDirection: "column",
     }
 })
 

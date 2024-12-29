@@ -1,22 +1,23 @@
-import { MainMenu } from './scenes/MainMenu';
-import { AUTO, Game } from 'phaser';
+import Phaser from 'phaser';
+import { RoomScene } from './scenes/RoomScene';
 
-//  Find out more information about the Game Config at:
-//  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
-const config: Phaser.Types.Core.GameConfig = {
-    type: AUTO,
-    width: "100%",
-    height: "100%",
+
+// Find out more information about the Game Config at:
+// https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
+const config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth, 
+    height: window.innerHeight, 
     parent: 'game-container',
-    backgroundColor: '##000000',
+    backgroundColor: '#028af8',
     scene: [
-        MainMenu,
+        RoomScene,
     ]
 };
 
-const StartGame = (parent: string) => {
+const StartGame = (parent : string) => {
 
-    return new Game({ ...config, parent });
+    return new Phaser.Game({ ...config, parent });
 
 }
 
