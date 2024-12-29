@@ -21,8 +21,6 @@ export class RoomScene extends Scene
     create ()
     {
         this.createGrid();
-
-        this.registerSceneEvent();
     }
 
     private createGrid() {    
@@ -58,32 +56,5 @@ export class RoomScene extends Scene
             const color = Phaser.Display.Color.RandomRGB().color
             this.grid[row][col].setFillStyle(color);
         });
-    }
-
-    private reigsterSceneEvent() {
-        this.input.on('pointerwheel', this.onPointerWheel, this);
-    }
-
-    private onPointerWheel(pointer: Phaser.Input.Pointer, x: number, y: number, deltaX: number, deltaY: number) {
-        // 缩放速率
-        const scaleSpeed = 0.1;
-    
-        // 根据滚轮方向调整缩放比例
-        if (deltaY < 0) {
-          // 滚轮向上滚动（放大）
-            this.scaleFactor += scaleSpeed;
-        } else if (deltaY > 0) {
-          // 滚轮向下滚动（缩小）
-            this.scaleFactor -= scaleSpeed;
-        }
-    
-        // 限制缩放比例在一定范围内
-        this.scaleFactor = Phaser.Math.Clamp(this.scaleFactor, 0.5, 2); // 缩放范围：0.5到2倍
-    
-        // 更新网格的缩放
-        this.updateGridScale();
-      }
-
-    private updateGridScale() {
     }
 }
