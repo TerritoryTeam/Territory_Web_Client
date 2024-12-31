@@ -19,6 +19,7 @@ import {
     PhaserGame 
 } from "../game/PhaserGame";
 import WorldPanel from "../components/WorldsPanel";
+import { useAppSelector } from "../hook";
 
 
 const TerritoryGameWorld = () => {
@@ -26,9 +27,11 @@ const TerritoryGameWorld = () => {
 
     const phaserRef = useRef<IRefPhaserGame | null>(null);
 
+    const isSelectedWorld = useAppSelector((state) => state.world.isSelectedWorld);
+
     const [expanded, setExpanded] = useState(false)
     const [isDragging, setIsDragging] = useState(false);
-    const [isWorldSelecting, setIsWorldSelecting] = useState(true);
+    
 
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -68,14 +71,14 @@ const TerritoryGameWorld = () => {
                     onMouseDown={handleMouseDown}
                     className={classes.worldContainer}>
                         {
-                            isWorldSelecting ? 
+                            !isSelectedWorld ? 
                                 <WorldPanel /> :
                                 <PhaserGame ref={phaserRef} />
                         }
                 </Box>
                 
                 {
-                    !isWorldSelecting &&
+                    isSelectedWorld &&
                         <Paper
                             className={classes.rightTopController}>
                             <List>
@@ -94,7 +97,7 @@ const TerritoryGameWorld = () => {
                 
             </Stack>
             {
-                !isWorldSelecting &&
+                isSelectedWorld &&
                     <Box
                         className={classes.BottomContainer}>
                         Bottom

@@ -28,12 +28,18 @@ function WelcomeDialog (props: WelcomeDialogProps) {
         onClose();
     }
 
+    const blockClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+    }
+
     return (
         <Backdrop
             sx={(theme) => ({ backgroundColor: '#000000b3', zIndex: theme.zIndex.drawer + 1 })}
-            open={open}>
+            open={open}
+            onClick={onClose}>
             <Stack
-                className={classes.stackContainer}>
+                className={classes.stackContainer}
+                onClick={blockClick}>
                 <img 
                     className={classes.robot}
                     src="/assets/menu/menu_welcome.svg"/>

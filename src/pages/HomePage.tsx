@@ -8,6 +8,7 @@ import TerritoryGameWorld from "./TerritoryGameWorld";
 const HomePage = () => {
     const [isWelcomeOpen, setIsWelcomeOpen] = useState(false);
 
+    
     const {classes} = useStyles();
 
     useEffect(() => {
