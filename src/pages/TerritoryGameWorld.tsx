@@ -18,25 +18,25 @@ import {
     IRefPhaserGame, 
     PhaserGame 
 } from "../game/PhaserGame";
+import WorldPanel from "../components/WorldsPanel";
 
 
 const TerritoryGameWorld = () => {
     const {classes} = useStyles();
 
     const phaserRef = useRef<IRefPhaserGame | null>(null);
+
     const [expanded, setExpanded] = useState(false)
-    
     const [isDragging, setIsDragging] = useState(false);
+    const [isWorldSelecting, setIsWorldSelecting] = useState(true);
+
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const divRef = useRef(null); // 用于引用div元素
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        // 记录鼠标点击时的初始位置
         const offsetX = e.clientX - position.x;
         const offsetY = e.clientY - position.y;
         setIsDragging(true);
 
-        // 设置鼠标移动事件，动态更新位置
         const handleMouseMove = (moveEvent: MouseEvent) => {
             if (isDragging) {
                 setPosition({
@@ -46,7 +46,6 @@ const TerritoryGameWorld = () => {
             }
         };
 
-        // 监听鼠标移动
         const handleMouseUp = () => {
             setIsDragging(false);
             document.removeEventListener('mousemove', handleMouseMove);
@@ -68,30 +67,39 @@ const TerritoryGameWorld = () => {
                 <Box 
                     onMouseDown={handleMouseDown}
                     className={classes.worldContainer}>
-                    <PhaserGame 
-                        ref={phaserRef}
-                        />
+                        {
+                            isWorldSelecting ? 
+                                <WorldPanel /> :
+                                <PhaserGame ref={phaserRef} />
+                        }
                 </Box>
                 
-                <Paper
-                    className={classes.rightTopController}>
-                    <List>
-                        <Box>
-                            <ListItemButton
-                                onClick={() => setExpanded(!expanded)}>
-                                <ListItemText primary="Test"></ListItemText>
-                            </ListItemButton>
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                Test
-                            </Collapse>
-                        </Box>
-                    </List>
-                </Paper>
+                {
+                    !isWorldSelecting &&
+                        <Paper
+                            className={classes.rightTopController}>
+                            <List>
+                                <Box>
+                                    <ListItemButton
+                                        onClick={() => setExpanded(!expanded)}>
+                                        <ListItemText primary="Test"></ListItemText>
+                                    </ListItemButton>
+                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                        Test
+                                    </Collapse>
+                                </Box>
+                            </List>
+                        </Paper>
+                }
+                
             </Stack>
-            <Box
-                className={classes.BottomContainer}>
-                Bottom
-            </Box>
+            {
+                !isWorldSelecting &&
+                    <Box
+                        className={classes.BottomContainer}>
+                        Bottom
+                    </Box>
+            }
         </Stack>
     )
 }
@@ -112,7 +120,6 @@ const useStyles = makeStyles() ({
         flex: 1,
         height: "100%",
         overflowY: "auto",
-        background: "#0031FF",
         overflow: "hidden",
     },
     rightTopController: {
@@ -122,7 +129,6 @@ const useStyles = makeStyles() ({
     },
     BottomContainer: {
         height: "100px",
-        background: "#FF00FF"
     }
 })
 

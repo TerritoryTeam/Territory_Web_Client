@@ -50,7 +50,8 @@ function GameBar() {
     }
 
     return (
-        <AppBar position="static">
+        <AppBar position="static"
+            className={classes.barContainer}>
             <Toolbar>
                 <IconButton
                     size="large"
@@ -114,6 +115,9 @@ function GameBar() {
 }
 
 const useStyles = makeStyles() ({
+    barContainer: {
+        backgroundColor: "#191A1E",
+    },
     barLogo: {
         width: "116px",
     }

@@ -7,7 +7,6 @@ export class RoomScene extends Scene
     private rows: number = 50;     
     private cols: number = 50;    
     private grid: Phaser.GameObjects.Rectangle[][] = [];
-    private scaleFactor: number = 1;
 
     constructor ()
     {

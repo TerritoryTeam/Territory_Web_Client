@@ -1,4 +1,8 @@
-import { Client, Session, Socket } from "@heroiclabs/nakama-js"
+import { 
+  Client, 
+  Session, 
+  Socket 
+} from "@heroiclabs/nakama-js"
 
 class NakamaClient {
   private client: Client
@@ -29,6 +33,23 @@ class NakamaClient {
     } 
     catch (error) {
       console.error("Error fetching user information: ", error);
+    }
+  }
+
+  async listMatches() {
+    try {
+      var minPlayers = 0;
+      var maxPlayers = 10;
+      var limit = 10;
+      var authoritative = true;
+      var label = "";
+      var query = "";
+
+      const matches = await this.client.listMatches(this.session, limit, authoritative, label, minPlayers, maxPlayers, query);
+      return matches;
+    } 
+    catch (error) {
+      console.error("Error listing matches: ", error);
     }
   }
 }
