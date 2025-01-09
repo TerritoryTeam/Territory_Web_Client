@@ -1,0 +1,1 @@
+npx protoc --ts_out . --proto_path protos protos/territory.proto

@@ -9,7 +9,7 @@ function App()
     useEffect(() => { 
         const timer = setTimeout(() => {
             setLogoVisiable(false);
-        }, 3000);
+        }, 2000);
     
         return () => clearTimeout(timer);
       }, []);

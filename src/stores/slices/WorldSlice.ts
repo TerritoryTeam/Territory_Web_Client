@@ -1,50 +1,65 @@
-import { 
-    createSlice, 
-    PayloadAction 
+import {
+    createAsyncThunk,
+    createSlice,
+    PayloadAction, 
 } from "@reduxjs/toolkit";
 
+import { globalContainer } from "../../providers/GlobalProvider";
 
-export interface GameWorld {
-    Id: string;
-    Name: string;
-}
+import { World } from "../../models/worlds";
 
-export interface Faction {
-    Id: string;
-    Name: string;
-}
+export const joinGameWorld = createAsyncThunk<World, World, { rejectValue: string }>(
+    'game/world/join',
+    async (world, thunkAPI) => {
+      try {
+        if (world == null || world.match_id == null) {
+          return thunkAPI.rejectWithValue("Invalid Operation");
+        }
 
-interface WorldState {
-    isSelectedWorld: boolean;
-    World: GameWorld | null;
-    Faction: Faction | null;
-}
+        await globalContainer.nakama.joinWorld(world?.match_id);
 
-const initialState: WorldState = {
-    isSelectedWorld: false,
-    World: null,
-    Faction: null,
-}
+        return world
+      } catch (error) {
+        return thunkAPI.rejectWithValue('Network error');
+      }
+    }
+  );
 
 const WorldSlice = createSlice({
     name: "world",
-    initialState,
+    initialState: {
+        lobbyJoined: false,
+        worldJoined: false,
+        worldId: '',
+        worldHistory: [] as World[],
+        roomJoined: false,
+        roomId: '',
+    },
     reducers: {
-        selectWorld: (state, action: PayloadAction<{ world: GameWorld, faction: Faction }>) => {
-            state.isSelectedWorld = true;
-            state.World = action.payload.world;
-            state.Faction = action.payload.faction;
+        setLobbyJoined: (state, action: PayloadAction<boolean>) => {
+            state.lobbyJoined = action.payload
         },
-        unselectWorld: (state) => {
-            state.isSelectedWorld = false;
-            state.World = null;
-            state.Faction = null;
-        }
+        setWorldJoined: (state, action: PayloadAction<boolean>) => {
+            state.worldJoined = action.payload
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(joinGameWorld.fulfilled, (state, action) => {
+            state.worldJoined = true;
+            state.worldId = action.payload.match_id;
+            state.worldHistory.push(action.payload as World);
+        });
+        builder.addCase(joinGameWorld.rejected, (state, action) => {
+            state.worldJoined = false;
+            state.worldId = '';
+            state.worldHistory = [];
+            console.error(action.payload);
+        });
     }
 });
 
-export const { 
-    selectWorld,
-    unselectWorld } = WorldSlice.actions;
+export const {
+    setLobbyJoined,
+} = WorldSlice.actions;
 export default WorldSlice.reducer;
 

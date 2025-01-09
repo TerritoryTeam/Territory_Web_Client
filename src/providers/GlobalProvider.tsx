@@ -5,7 +5,7 @@ import {
 } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
-import NakamaClient from "../nakama";
+import NakamaClient from "../services/Nakama";
 
 interface GlobalContainer {
     id: string,

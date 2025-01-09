@@ -7,7 +7,7 @@ import {
 } from "./UserSlice";
 
 interface AuthState {
-    isLoginIn: boolean;
+    isLoggedIn: boolean;
     loginStatus: 'idle' | 'loading' | 'failed' | 'success';
     error: string | null;
 }
@@ -18,7 +18,7 @@ interface LoginWithEmailCredential {
 }
 
 const initialState: AuthState = {
-    isLoginIn: false,
+    isLoggedIn: false,
     loginStatus: 'idle',
     error: null
 }
@@ -47,7 +47,7 @@ const AuthSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            state.isLoginIn = false;
+            state.isLoggedIn = false;
             state.loginStatus = 'idle';
 
             state.error = null;
@@ -62,7 +62,7 @@ const AuthSlice = createSlice({
                 state.loginStatus = 'loading';
             })
             .addCase(loginWithEmailCredential.fulfilled, (state, action) => {
-                state.isLoginIn = action.payload;
+                state.isLoggedIn = action.payload;
                 state.loginStatus = 'success';
             })
             .addCase(loginWithEmailCredential.rejected, (state, action) => {   
