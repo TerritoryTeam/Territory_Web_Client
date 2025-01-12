@@ -6,13 +6,14 @@ import {
 
 import store from "../stores";
 import { 
-  setLobbyJoined
+  setLobbyJoined,
+  setRoomJoined,
+  setWorldJoined,
+  setWorldRooms
 } from "../stores/slices/WorldSlice";
 
 import { Faction, World } from "../models/worlds";
-import { ListAvailableRoomMessage, OpCode } from "../territory";
-
-
+import { ListAvailableRoomMessage, OpCode, Room } from "../territory";
 
 class NakamaClient {
   private client: Client
@@ -76,11 +77,10 @@ class NakamaClient {
   async joinWorld(matchId: string) : Promise<World | null> {
     try {
       this.initialize();
-      
-      console.log("Match joining: ", matchId);
+    
       const match = await this.socket.joinMatch(matchId);
-      console.log("Match joined: ", match);
 
+      store.dispatch(setWorldJoined(matchId));
 
       return {
         name: match.match_id,
@@ -119,22 +119,28 @@ class NakamaClient {
   async initialize() {
     this.socket.onmatchdata = (matchData) => {
       console.log("Match data received: ", matchData);
+      const json_string = new TextDecoder().decode(matchData.data)
+      const json = json_string ? JSON.parse(json_string): ""
       
       switch (matchData.op_code) {
         case OpCode.OPCODE_USER_JOIN:
           console.log("Match data received: ", matchData.data);
           break;
+
         case OpCode.OPCODE_ROOMS_LIST_AVAILABLE:
+          const message = ListAvailableRoomMessage.fromJson(json);
+          store.dispatch(setWorldRooms(message.rooms));
 
-          console.log("Match data received: ", matchData.data);
-          const message = ListAvailableRoomMessage.fromBinary(matchData.data);
-
-          console.log("Match data decoded: ", message);
+          console.log("List Match data decoded: ", message);
 
           break;
+
         case OpCode.OPCODE_ROOM_UPDATE:
           console.log("Match data received: ", matchData.data);
+          store.dispatch(setRoomJoined("test"));
+
           break;
+
         default:
           break;
       }

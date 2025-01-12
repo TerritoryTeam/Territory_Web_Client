@@ -7,6 +7,7 @@ import {
 import { globalContainer } from "../../providers/GlobalProvider";
 
 import { World } from "../../models/worlds";
+import { Room } from "../../territory";
 
 export const joinGameWorld = createAsyncThunk<World, World, { rejectValue: string }>(
     'game/world/join',
@@ -34,13 +35,22 @@ const WorldSlice = createSlice({
         worldHistory: [] as World[],
         roomJoined: false,
         roomId: '',
+        worldRooms: [] as Room[]
     },
     reducers: {
         setLobbyJoined: (state, action: PayloadAction<boolean>) => {
             state.lobbyJoined = action.payload
         },
-        setWorldJoined: (state, action: PayloadAction<boolean>) => {
-            state.worldJoined = action.payload
+        setWorldJoined: (state, action: PayloadAction<string>) => {
+            state.worldJoined = true
+            state.worldId = action.payload
+        },
+        setWorldRooms: (state, action: PayloadAction<Room[]>) => {
+            state.worldRooms = action.payload
+        },
+        setRoomJoined: (state, action: PayloadAction<string>) => {
+            state.roomJoined = true
+            state.roomId = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -60,6 +70,9 @@ const WorldSlice = createSlice({
 
 export const {
     setLobbyJoined,
+    setWorldJoined,
+    setWorldRooms,
+    setRoomJoined,
 } = WorldSlice.actions;
 export default WorldSlice.reducer;
 

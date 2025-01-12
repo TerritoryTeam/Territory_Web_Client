@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { makeStyles } from "tss-react/mui"
 
 import { Box } from "@mui/material"
@@ -6,9 +6,12 @@ import { Box } from "@mui/material"
 import { useAppSelector } from "../hook"
 
 import LoginDialog from "../components/LoginPanel"
-
 import WorldSelectionPanel from "../components/WorldSelectionPanel"
 import RoomSelectedPanel from "../components/RoomSelectedPanel"
+import { 
+    IRefPhaserGame,
+    TerritoryGame,
+} from "../game/TerritoryGame"
 
 const TerritoryGameWorldPage = () => {
     const {classes} = useStyles()
@@ -21,6 +24,10 @@ const TerritoryGameWorldPage = () => {
     const loggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const worldJoined = useAppSelector(state => state.world.worldJoined)
     const roomJoined = useAppSelector(state => state.world.roomJoined)
+
+    const pahserRef = useRef<IRefPhaserGame | null>(null)
+
+
 
     let ui : JSX.Element
     if (loggedIn) {
@@ -42,15 +49,32 @@ const TerritoryGameWorldPage = () => {
 
     return (
         <Box className={classes.backdropContainer}>
-            {ui}
+            <div 
+                className={classes.uiContainer}>
+                {ui}
+            </div>
+            {
+                worldJoined ?
+                    <TerritoryGame /> :
+                    null
+            }
         </Box>
     )
 }
 
 const useStyles = makeStyles() ({
     backdropContainer: {
+        position: 'relative',
         height: '100%',
         width: '100%',
+    },
+    uiContainer: {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        zIndex: 1,
     }
 })
 
