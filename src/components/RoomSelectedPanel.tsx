@@ -1,5 +1,5 @@
 import { makeStyles } from "tss-react/mui";
-import { IconButton, Paper, Typography } from "@mui/material";
+import { IconButton, Paper } from "@mui/material";
 
 
 function RoomSelectedPanel () {

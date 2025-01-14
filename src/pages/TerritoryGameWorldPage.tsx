@@ -12,6 +12,8 @@ import {
     IRefPhaserGame,
     TerritoryGame,
 } from "../game/TerritoryGame"
+import RoomOperatorPanel from "../components/RoomOperatorPanel"
+import BootstrapScene from "../game/scenes/BootstrapScene"
 
 const TerritoryGameWorldPage = () => {
     const {classes} = useStyles()
@@ -25,20 +27,22 @@ const TerritoryGameWorldPage = () => {
     const worldJoined = useAppSelector(state => state.world.worldJoined)
     const roomJoined = useAppSelector(state => state.world.roomJoined)
 
-    const pahserRef = useRef<IRefPhaserGame | null>(null)
-
-
+    const phaserRef = useRef<IRefPhaserGame | null>(null)
 
     let ui : JSX.Element
     if (loggedIn) {
         if (!worldJoined) {
             ui = <WorldSelectionPanel />
         } else if (!roomJoined) {
+            // change to room selector scene
+            if (phaserRef.current) {
+                let bootstrap = (phaserRef.current.game as Phaser.Game).scene.getScene('BootstrapScene') as BootstrapScene
+                bootstrap.launchRoomSelector()
+                console.log('launch room selector scene')
+            }
             ui = <RoomSelectedPanel />
         } else {
-            ui = (
-                <div>GameWorld</div>
-            )
+            ui = <RoomOperatorPanel />
         }
     } else {
         setIsLoginDialogOn(true)
@@ -55,7 +59,7 @@ const TerritoryGameWorldPage = () => {
             </div>
             {
                 worldJoined ?
-                    <TerritoryGame /> :
+                    <TerritoryGame ref={phaserRef} /> :
                     null
             }
         </Box>

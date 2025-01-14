@@ -17,9 +17,13 @@ export const joinGameWorld = createAsyncThunk<World, World, { rejectValue: strin
           return thunkAPI.rejectWithValue("Invalid Operation");
         }
 
-        await globalContainer.nakama.joinWorld(world?.match_id);
+        let joinedWorld = await globalContainer.nakama.joinWorld(world?.match_id);
+        if (joinedWorld == null || joinedWorld.match_id == "") 
+        {
+            return thunkAPI.rejectWithValue("World not found");
+        }
 
-        return world
+        return joinedWorld
       } catch (error) {
         return thunkAPI.rejectWithValue('Network error');
       }
@@ -32,6 +36,7 @@ const WorldSlice = createSlice({
         lobbyJoined: false,
         worldJoined: false,
         worldId: '',
+        worldError: '',
         worldHistory: [] as World[],
         roomJoined: false,
         roomId: '',
@@ -58,12 +63,13 @@ const WorldSlice = createSlice({
             state.worldJoined = true;
             state.worldId = action.payload.match_id;
             state.worldHistory.push(action.payload as World);
+            state.worldError = '';
         });
         builder.addCase(joinGameWorld.rejected, (state, action) => {
             state.worldJoined = false;
             state.worldId = '';
             state.worldHistory = [];
-            console.error(action.payload);
+            state.worldError = action.payload as string;
         });
     }
 });

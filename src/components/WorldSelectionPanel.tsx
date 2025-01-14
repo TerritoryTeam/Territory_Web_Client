@@ -26,6 +26,7 @@ function WorldSelectionPanel () {
     const dispatch = useAppDispatch()
 
     const lobbyJoined = useAppSelector(state => state.world.lobbyJoined)
+    const worldError = useAppSelector(state => state.world.worldError)
 
     const [showSnackbar, setShowSnackbar] = useState(false)
     const [selectedWorldIndex, setSelectedWorldIndex] = useState(0);
@@ -65,7 +66,7 @@ function WorldSelectionPanel () {
             className={classes.rootContainer}>
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={showSnackbar}
+                open={showSnackbar || worldError != ""}
                 autoHideDuration={3000}
                 onClose={() => setShowSnackbar(false)}
             >
@@ -75,10 +76,11 @@ function WorldSelectionPanel () {
                     // overwrites the dark theme on render
                     style={{ background: '#fdeded', color: '#7d4747' }}
                     >
-                    Connecting to server, please try again!
+                    {worldError}, please try again!
                 </Alert>
             </Snackbar>
-            <Box>
+            <Stack
+                spacing={2}>
                 <Typography variant="h3">Welcome to Territory</Typography>
                 <Typography variant="h5">Select your world:</Typography>
                 <Stack
@@ -102,12 +104,6 @@ function WorldSelectionPanel () {
                         })
                     }
                 </Stack>
-                <Button 
-                    variant="contained"
-                    disabled={!isWorldsSuccess || !lobbyJoined}
-                    onClick={() => handleJoinWorld(worlds![selectedWorldIndex])}>
-                    Join World  
-                </Button>
                 <Box>
                     <p>World will be regenerated after </p>
                     <p className={classes.clock}>
@@ -117,9 +113,14 @@ function WorldSelectionPanel () {
                         {59 - time.getSeconds()}S
                     </p>
                 </Box>
-
-            </Box>
-            {!lobbyJoined && (
+                <Button 
+                    variant="contained"
+                    disabled={!isWorldsSuccess || !lobbyJoined}
+                    onClick={() => handleJoinWorld(worlds![selectedWorldIndex])}>
+                    Join World  
+                </Button>
+            </Stack>
+            {!lobbyJoined || isWorldsFetching && (
                 <div className={classes.connectionContainer}>
                     <h3> Connecting to server...</h3>
                     <LinearProgress 

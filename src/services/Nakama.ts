@@ -74,23 +74,27 @@ class NakamaClient {
     }
   }
 
-  async joinWorld(matchId: string) : Promise<World | null> {
+  async joinWorld(matchId: string) : Promise<World> {
     try {
       this.initialize();
     
-      const match = await this.socket.joinMatch(matchId);
-
-      store.dispatch(setWorldJoined(matchId));
+      const match = await this.socket.joinMatch(matchId); 
 
       return {
-        name: match.match_id,
+        name: match.label,
+        match_id: match.match_id,
         avatar: match.label,
         selectedAvatar: match.label
       } as World;
     } 
     catch (error) {
       console.error("Error joining match: ", error);
-      return null;
+      return {
+        name: "World not found",	
+        match_id: "",
+        avatar: "",
+        selectedAvatar: ""
+      } as World;
     }
   }
 

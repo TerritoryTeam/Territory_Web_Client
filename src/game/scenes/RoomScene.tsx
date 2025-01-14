@@ -17,9 +17,7 @@ export class RoomScene extends Scene
 
     preload ()
     {
-        globalContainer.nakama.joinMatch("12345");
-
-
+        globalContainer.nakama.joinWorld("12345");
     }
 
     create ()

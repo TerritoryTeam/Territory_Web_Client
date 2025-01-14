@@ -14,10 +14,10 @@ export interface IRefPhaserGame
 }
 
 interface IProps {
-    currentActiveScene?: (scene_instance : Phaser.Scene) => void;
+
 }
 
-export const TerritoryGame = forwardRef<IRefPhaserGame, IProps>(function TerritoryGame({currentActiveScene}, ref)
+export const TerritoryGame = forwardRef<IRefPhaserGame, IProps>(function TerritoryGame({}, ref)
 {
     const {classes} = useStyles();
 

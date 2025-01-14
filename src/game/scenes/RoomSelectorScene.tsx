@@ -14,13 +14,10 @@ export class RoomSelectorScene extends Scene
 
     preload ()
     {
-        // globalContainer.nakama.joinMatch("12345");
     }
 
     create ()
     {
-        // this.nakamaListener();
-        
         this.createGrid();
     }
 
@@ -50,11 +47,4 @@ export class RoomSelectorScene extends Scene
             }
         }
     }
-
-    // private nakamaListener() {
-    //     globalContainer.nakama.socket.onmatchdata = (result) => {
-    //         const message = UserJoinLeaveMessage.decode(new Uint8Array(result.data));
-    //         console.log(message);
-    //     }
-    // }
 }

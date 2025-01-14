@@ -2,7 +2,7 @@ import { AUTO, Game } from 'phaser';
 
 import { RoomScene } from './scenes/RoomScene';
 import { RoomSelectorScene } from './scenes/RoomSelectorScene';
-import LoadGameScene from './scenes/LoadGameScene';
+import BootstrapScene from './scenes/BootstrapScene';
 
 
 //  Find out more information about the Game Config at:
@@ -14,7 +14,7 @@ const config: Phaser.Types.Core.GameConfig = {
     parent: 'game-container',
     backgroundColor: '#028af8',
     scene: [
-        LoadGameScene,
+        BootstrapScene,
         RoomSelectorScene,
         RoomScene,
     ]
