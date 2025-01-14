@@ -5,8 +5,4 @@ export default class BootstrapScene extends Phaser.Scene {
 
     preload() {
     }
-
-    launchRoomSelector() {
-        this.scene.start('RoomSelectorScene');
-    }
 }

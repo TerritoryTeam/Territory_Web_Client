@@ -13,7 +13,6 @@ import {
     TerritoryGame,
 } from "../game/TerritoryGame"
 import RoomOperatorPanel from "../components/RoomOperatorPanel"
-import BootstrapScene from "../game/scenes/BootstrapScene"
 
 const TerritoryGameWorldPage = () => {
     const {classes} = useStyles()
@@ -35,10 +34,23 @@ const TerritoryGameWorldPage = () => {
             ui = <WorldSelectionPanel />
         } else if (!roomJoined) {
             // change to room selector scene
+            let roomJoinedSceneKey = 'RoomSelectorScene'
             if (phaserRef.current) {
-                let bootstrap = (phaserRef.current.game as Phaser.Game).scene.getScene('BootstrapScene') as BootstrapScene
-                bootstrap.launchRoomSelector()
-                console.log('launch room selector scene')
+                let sceneStarted = false
+                phaserRef.current.game?.scene.getScenes(true).forEach(element => {
+                    if (element.scene.key === roomJoinedSceneKey) {
+                        sceneStarted = true
+                    }
+                });
+
+                if (!sceneStarted) {
+                    phaserRef.current.game?.scene.start(roomJoinedSceneKey)
+                    console.log('launch room selector scene')
+                }
+                
+            }
+            else {
+                console.log('phaser ref is null')
             }
             ui = <RoomSelectedPanel />
         } else {
@@ -57,11 +69,7 @@ const TerritoryGameWorldPage = () => {
                 className={classes.uiContainer}>
                 {ui}
             </div>
-            {
-                worldJoined ?
-                    <TerritoryGame ref={phaserRef} /> :
-                    null
-            }
+            <TerritoryGame ref={phaserRef} />
         </Box>
     )
 }
