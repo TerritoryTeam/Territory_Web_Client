@@ -135,7 +135,10 @@ function WorldSelectionPanel () {
 
 const useStyles = makeStyles() ({
     rootContainer: {
+        position: "absolute",
+        width: "100%",
         height: "100%",
+        zIndex: 10,
         paddingTop: "47px",
         backgroundColor: "#191B21",
         textAlign: "center",

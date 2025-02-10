@@ -1,7 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 import { IconButton, Paper } from "@mui/material";
 
-
 function RoomSelectedPanel () {
   const {classes} = useStyles();
 
@@ -30,10 +29,12 @@ const useStyles = makeStyles() ({
     background: "#000000b3",
     textAlign: "center",
     justifyContent: "center",
+    zIndex: 10,
   },
   description: {
     fontSize: "27px",
     color: "white",
+    userSelect: "none",
   },
   dice: {
     marginLeft: "25px",

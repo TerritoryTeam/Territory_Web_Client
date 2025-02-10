@@ -5,6 +5,8 @@
         "nakama",
         "protoc",
         "protos",
+        "tilemap",
+        "Tileset",
         "uuidv",
         "xenobio"
     ]
