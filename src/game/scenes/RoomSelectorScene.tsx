@@ -4,9 +4,10 @@ import { Room } from "../../territory";
 
 export class RoomSelectorScene extends Scene
 {
-    map: Phaser.Tilemaps.Tilemap;
-    layer1: Phaser.Tilemaps.TilemapLayer | null;
-    layer2: Phaser.Tilemaps.TilemapLayer | null;
+    private map: Phaser.Tilemaps.Tilemap;
+    private layerRoom: Phaser.Tilemaps.TilemapLayer | null;
+    private layerOwner: Phaser.Tilemaps.TilemapLayer | null;
+    private highlight: Phaser.GameObjects.Rectangle;
 
     constructor ()
     {
@@ -20,6 +21,38 @@ export class RoomSelectorScene extends Scene
 
     create ()
     {
+        this.tilesInit()
+
+        store.subscribe(() => this.updateRooms())
+        this.updateRooms()
+
+        this.highlight = this.add.rectangle(0, 0, 50, 50, 0xADD8E6, 0.5)
+        this.highlight.setOrigin(0)
+        this.highlight.setVisible(false)
+        
+        this.layerRoom!.setInteractive()
+        this.layerRoom!.on('pointermove', this.highlightRecMove, this);
+
+        this.layerRoom!.on('pointerout', () => {
+            this.highlight.setVisible(false)
+        })
+    }
+
+    highlightRecMove(pointer : Phaser.Input.Pointer) {
+        console.log("Pointer:", pointer.worldX, ":", pointer.worldY)
+        const tile = this.layerRoom!.getTileAtWorldXY(pointer.worldX, pointer.worldY)
+
+        if (tile) {
+            console.log("tile:", tile.pixelX, tile.pixelY)
+            this.highlight.setPosition(tile.pixelX, tile.pixelY);
+            this.highlight.setVisible(true);
+        } else {
+            console.log("pointer outof tilemap")
+            this.highlight.setVisible(false)
+        }
+    }
+
+    tilesInit() {
         this.map = this.make.tilemap({
             key: 'world',
             tileHeight: 50,
@@ -36,13 +69,8 @@ export class RoomSelectorScene extends Scene
             50,
             50)
 
-        this.layer1 = this.map.createBlankLayer('rooms', roomTiles!, 0, 0)
-        this.layer2 = this.map.createBlankLayer('owners', logoTiles!, 0, 0)
-
-        store.subscribe(() => this.updateRooms())
-        this.updateRooms()
-
-        this.input.on('pointermove', this.handlePointerMove, this);
+        this.layerRoom = this.map.createBlankLayer('rooms', roomTiles!, 0, 0)
+        this.layerOwner = this.map.createBlankLayer('owners', logoTiles!, 0, 0)
     }
 
     updateRooms() {
@@ -51,24 +79,12 @@ export class RoomSelectorScene extends Scene
         if (!state.world.worldRooms.length) return
 
         for (const room of state.world.worldRooms) {
-            this.layer1?.putTileAt(1, room.roomX, room.roomY)
+            this.layerRoom?.putTileAt(1, room.roomX, room.roomY)
 
-            const randomIndex = Phaser.Math.Between(0, 5);
-            this.layer2?.putTileAt(randomIndex, room.roomX, room.roomY);
-        }
-    }
-
-    handlePointerMove(pointer: Phaser.Input.Pointer): void {
-        const worldX: number = pointer.x;
-        const worldY: number = pointer.y;
-      
-        const tileX: number = this.map.worldToTileX(worldX)!;
-        const tileY: number = this.map.worldToTileY(worldY)!;
-      
-        const tile: Phaser.Tilemaps.Tile | null = this.layer1!.getTileAt(tileX, tileY);
-      
-        if (tile) {
-          console.log(`Hovering over tile at (${tileX}, ${tileY})`);
+            if (room.userOwner) {
+                const randomIndex = Phaser.Math.Between(0, 5);
+                this.layerOwner?.putTileAt(randomIndex, room.roomX, room.roomY);
+            }
         }
     }
 }
