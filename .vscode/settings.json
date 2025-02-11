@@ -6,6 +6,7 @@
         "protoc",
         "protos",
         "tilemap",
+        "Tilemaps",
         "Tileset",
         "uuidv",
         "xenobio"

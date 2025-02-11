@@ -40,6 +40,7 @@ const WorldSlice = createSlice({
         worldHistory: [] as World[],
         roomJoined: false,
         roomId: '',
+        room: null as (Room | null),
         worldRooms: [] as Room[]
     },
     reducers: {
@@ -52,6 +53,10 @@ const WorldSlice = createSlice({
         },
         setWorldRooms: (state, action: PayloadAction<Room[]>) => {
             state.worldRooms = action.payload
+        },
+        tryJoinRoom: (state, action: PayloadAction<Room>) => {
+            state.room = action.payload
+            state.roomId = `E${action.payload.roomX}S${action.payload.roomY}`
         },
         setRoomJoined: (state, action: PayloadAction<string>) => {
             state.roomJoined = true
@@ -79,6 +84,7 @@ export const {
     setWorldJoined,
     setWorldRooms,
     setRoomJoined,
+    tryJoinRoom,
 } = WorldSlice.actions;
 export default WorldSlice.reducer;
 

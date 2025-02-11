@@ -1,8 +1,29 @@
 import { makeStyles } from "tss-react/mui";
-import { IconButton, Paper } from "@mui/material";
+import { 
+  Button, 
+  IconButton, 
+  Paper, 
+  Snackbar
+} from "@mui/material";
+import { useState } from "react";
+import { useAppSelector } from "../hook";
 
 function RoomSelectedPanel () {
   const {classes} = useStyles();
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
+  const room = useAppSelector(state => state.world.room)
+
+  const handleRoomSelect = () => {
+    if (room == null) {
+      setSnackbarOpen(true)
+    } else {
+      console.debug('select room:', room.roomX, ',' , room.roomY)
+    }
+  }
+
+  const randomRoomSelect = () => {
+    console.debug('random select room')
+  }
 
   return (
     <Paper 
@@ -11,11 +32,23 @@ function RoomSelectedPanel () {
           className={classes.description}>
           Select Your Room 
         </span>
-        <IconButton>
+        <Button 
+          className={classes.confirmButton}
+          onClick={handleRoomSelect}
+          variant="contained">
+            Confirm
+        </Button>
+        <IconButton
+          onClick={randomRoomSelect}>
           <img 
             src="/assets/worlds/dice.svg" 
             className={classes.dice}/>
         </IconButton>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center'  }}
+          open={snackbarOpen}
+          message="Select Room First"
+        />
     </Paper>
   );
 };
@@ -35,6 +68,9 @@ const useStyles = makeStyles() ({
     fontSize: "27px",
     color: "white",
     userSelect: "none",
+  },
+  confirmButton: {
+    marginLeft: "20px",
   },
   dice: {
     marginLeft: "25px",
